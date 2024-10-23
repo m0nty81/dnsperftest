@@ -9,18 +9,16 @@ NAMESERVERS=`cat /etc/resolv.conf | grep ^nameserver | cut -d " " -f 2 | sed 's/
 
 PROVIDERSV4="
 1.1.1.1#cloudflare 
-4.2.2.1#level3 
+1.0.0.1#cloudlare-secondary
 8.8.8.8#google 
+8.8.4.4#google-secondary
 9.9.9.9#quad9 
-80.80.80.80#freenom 
-208.67.222.123#opendns 
-199.85.126.20#norton 
-185.228.168.168#cleanbrowsing 
-77.88.8.7#yandex 
-176.103.130.132#adguard 
-156.154.70.3#neustar 
-8.26.56.26#comodo
-45.90.28.202#nextdns
+77.88.8.8#yandex 
+77.88.8.1#yandex-secondary
+192.168.10.25#lar-adguard
+192.168.10.1#lar-gateway
+192.168.1.1#milya-gateway
+192.168.3.1#uva-gateway
 "
 
 PROVIDERSV6="
@@ -64,16 +62,17 @@ fi
     
 
 # Domains to test. Duplicated domains are ok
-DOMAINS2TEST="www.google.com amazon.com facebook.com www.youtube.com www.reddit.com  wikipedia.org twitter.com gmail.com www.google.com whatsapp.com"
+DOMAINS2TEST="google.com youtube.com facebook.com 4pda.to ya.ru mail.ru"
 
 
 totaldomains=0
 printf "%-21s" ""
 for d in $DOMAINS2TEST; do
     totaldomains=$((totaldomains + 1))
-    printf "%-8s" "test$totaldomains"
+    printf "%-16s" "$d "
+#    printf "%-8s" "test $totaldomains"
 done
-printf "%-8s" "Average"
+printf "%-16s" "Average"
 echo ""
 
 
@@ -92,7 +91,7 @@ for p in $NAMESERVERS $providerstotest; do
 	        ttime=1
 	    fi
 
-        printf "%-8s" "$ttime ms"
+        printf "%-16s" "$ttime ms"
         ftime=$((ftime + ttime))
     done
     avg=`bc -l <<< "scale=2; $ftime/$totaldomains"`
