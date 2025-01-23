@@ -19,6 +19,7 @@ PROVIDERSV4="
 192.168.10.1#lar-gateway
 192.168.1.1#milya-gateway
 192.168.3.1#uva-gateway
+192.168.3.20#uva-adguard
 "
 
 PROVIDERSV6="
